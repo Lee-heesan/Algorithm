@@ -1,21 +1,18 @@
 import java.util.Scanner;
 
 public class Main {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    
-    int A = sc.nextInt();
-    int B = sc.nextInt();
-      
-    int Q = A*(B%10);
-    int W = A*((B%100)/10);
-    int E = A*(B/100);
-    int R = A*B;
-      
-    System.out.println(Q);
-      System.out.println(W);
-      System.out.println(E);
-      System.out.println(R);
-  }
-}
+	public static void main(String [] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		String N1 = sc.nextLine();
+		String N2 = sc.nextLine();
+		
+		char[] N2_1 = N2.toCharArray();
+		
+		for(int i =2; i>=0;i--) {
+			System.out.println(Integer.parseInt(N1)*Character.getNumericValue(N2_1[i]));
+		}
+		System.out.println(Integer.parseInt(N1)*Integer.parseInt(N2));
+	}
 
+}
