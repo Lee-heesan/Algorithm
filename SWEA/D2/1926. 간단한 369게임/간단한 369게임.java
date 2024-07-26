@@ -11,31 +11,20 @@ class Solution
 		
 		int N = Integer.parseInt(br.readLine());
 		
-		for(int i =1; i<=N;i++) {
-			int count=0;
-			int st=i;
-			while(true) {
-				if(st/10>0) {
-					if((st%10)%3==0&&st%10!=0) {
-						sb.append("-");
-						count++;
-					}
-					st/=10;
-				}else {
-					if(st%3==0) {
-						sb.append("-");
-						count++;
-					}
-					break;
-				}
-			}
-			if(count==0) {
-				sb.append(i);
+		for(int i=1; i<=N;i++) {
+			String tmp = String.valueOf(i);
+			
+			if(tmp.contains("3")||tmp.contains("6")||tmp.contains("9")) {
+				tmp = tmp.replaceAll("[369]", "-");
+				tmp = tmp.replaceAll("[0124578]", "");
+				sb.append(tmp);
+			}else {
+				sb.append(tmp);
 			}
 			sb.append(" ");
 		}
-		System.out.println(sb);
 		
+		System.out.println(sb);
 	}
 
 }
