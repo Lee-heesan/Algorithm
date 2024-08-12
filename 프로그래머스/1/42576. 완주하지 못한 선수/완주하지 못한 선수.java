@@ -1,9 +1,6 @@
 import java.util.Arrays;
 class Solution {
-    public String solution(String[] participant, String[] completion) {        
-        return solution1(participant, completion);
-    }
-    public static String solution1(String[] participant, String[] completion) {
+    public static String solution(String[] participant, String[] completion) {
         Arrays.sort(participant);
         Arrays.sort(completion);
 
