@@ -28,27 +28,16 @@ class Solution
 
 	}
 	public static int calculate(int [] arr) {
-		int view =0;
+		int view = 0;
 		for(int i =2; i<arr.length-2; i++) {
 			if(arr[i-1]<arr[i]&&arr[i-2]<arr[i]&&arr[i]>arr[i+1]&&arr[i]>arr[i+2]) {
-				view += minClass(arr,i);
+				view += arr[i]-(Math.max(arr[i-1], Math.max(arr[i-2], Math.max(arr[i+1], arr[i+2]))));
 				i+=2;
 			}else {
 				continue;
 			}
 		}
 		return view;
-	}
-	
-	public static int minClass(int [] arr, int i) {
-		int min = Integer.MAX_VALUE;
-		for(int k=i-2; k<i+3; k++) {
-			if(k==i) {
-				continue;
-			}
-			min = Math.min(min,arr[i]-arr[k]);
-		}
-		return min;
 	}
 
 }
