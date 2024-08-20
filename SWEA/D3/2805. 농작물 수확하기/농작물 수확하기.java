@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 
 class Solution
 {
-	public static void main(String args[]) throws IOException {
+	public static void main(String args[])throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 		
@@ -15,23 +15,20 @@ class Solution
 			N=Integer.parseInt(br.readLine());
 			int start =N/2;
 			int end =N/2;
-			boolean half = false;
 			int sum=0;
-
+			
 			for(int j=0; j<N; j++) {
 				String str = br.readLine();
 				str = str.substring(start,(end+1));
 				for(int k = 0; k<str.length();k++) {
 					sum+=str.charAt(k)-'0';
 				}
-				if(j==N/2) {
-					half=true;
-				}
 				
-				if(half) {
+				
+				if(j>=N/2) {
 					start++;
 					end--;
-				}else {
+				}else if(j<N/2) {
 					start--;
 					end++;
 				}
