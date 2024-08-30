@@ -2,21 +2,36 @@ import java.util.Scanner;
 
 class Solution
 {
-	static int [][] arr;
-	static boolean [][] visited;
-	public static void main(String args[]) throws Exception
-	{
+	static int [] dx = {1,0,-1,0};
+	static int [] dy = {0,1,0,-1};
+
+	public static void main(String args[]) throws Exception{
 		Scanner sc = new Scanner(System.in);
 		StringBuilder sb = new StringBuilder();
-	
+		
 		int T = sc.nextInt();
 		
-		for(int i = 0; i<T ; i++) {
+		for(int i =0 ; i<T; i++) {
 			int N = sc.nextInt();
-			arr = new int[N][N];
-			visited = new boolean[N][N];
-					
-			clockSort(0,0,1,1);
+			int [][] arr = new int[N][N];
+			
+			int hx = 0;
+			int hy = 0;
+			int d =0;
+			
+			for(int j=0; j<N*N;j++) {
+				arr[hy][hx]=j+1;
+				if(hx+dx[d]>=arr.length|| hy+dy[d]>=arr.length ||hy+dy[d]<0 || hx+dx[d]<0 || arr[hy+ dy[d]][hx+dx[d]]!=0) {
+					d++;
+					if(d>3) {
+						d=0;
+					}
+				}
+				hx = hx+ dx[d];
+				hy = hy+ dy[d];
+			}
+			
+			
 			sb.append("#").append(i+1).append("\n");
 			for(int j=0; j<N; j++) {
 				for(int k=0; k<N; k++) {
@@ -27,51 +42,6 @@ class Solution
 		}
 		
 		System.out.println(sb.toString());
-
-	}
-	
-	
-	public static void clockSort(int x, int y,int count ,int as) {
-		if (count > arr.length * arr.length) {
-		    return;
-		}
-
-		
-		
-		switch (as) {
-		case 1:
-			while(arr.length>x&& !visited[y][x]) {
-				arr[y][x]=count++;
-				visited[y][x]=true;
-				x++;
-			}
-			clockSort(x-1,y+1,count,as+1);
-			break;
-		case 2:
-			while(arr.length>y&& !visited[y][x]) {
-				arr[y][x]=count++;
-				visited[y][x]=true;
-				y++;
-			}
-			clockSort(x-1,y-1,count,as+1);
-			break;
-		case 3:
-			while(0<=x&& !visited[y][x]) {
-				arr[y][x]=count++;
-				visited[y][x]=true;
-				x--;
-			}
-			clockSort(x+1,y-1,count,as+1);
-			break;
-		case 4:
-			while(y >= 0&&!visited[y][x]) {
-				arr[y][x]=count++;
-				visited[y][x]=true;
-				y--;
-			}
-			clockSort(x+1,y+1,count,1);
-			break;
-		}
 
 	}
 
