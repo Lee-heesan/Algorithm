@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -22,7 +21,6 @@ class Solution
 			int N = Integer.parseInt(st.nextToken());
 			int K = Integer.parseInt(st.nextToken());
 			int [] arr=  new int[N];
-			int [] S = new int[N];
 			List<Integer> list = new ArrayList<Integer>();
 			
 			st = new StringTokenizer(br.readLine()," ");
@@ -31,28 +29,12 @@ class Solution
 			}
 			
 			Arrays.sort(arr);
-
-			S[0]=0;
-			for(int j =1; j<N; j++) {
-				S[j]=arr[j]-arr[j-1];
+			
+			int min = Integer.MAX_VALUE;
+			for(int j=0; j<N-K+1; j++) {
+				min=Math.min(min, arr[j+K-1]-arr[j]);
 			}
-			
-			
-			boolean isEnd = true;
-			int start =1;
-			while(isEnd) {
-				int sum = 0;
-				for(int k=start; k<K+start-1; k++) {
-					sum += S[k];
-					if(k==N-1) {
-						isEnd=false;
-					}
-				}
-				start++;
-				list.add(sum);
-			}
-			
-			sb.append("#").append(i+" ").append(Collections.min(list)).append("\n");	
+			sb.append("#").append(i+" ").append(min).append("\n");	
 		}
 		System.out.println(sb);
 
