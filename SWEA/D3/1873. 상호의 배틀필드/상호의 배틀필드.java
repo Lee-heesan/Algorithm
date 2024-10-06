@@ -52,47 +52,26 @@ class Solution
 			for(int j=0; j<howDo.length; j++) {
 				if(howDo[j].equals("S")){
 					shoot();
+//					System.out.println(howDo[j]+" "+Now[0]+" "+Now[1]);
+//					for(int e=0; e<H;e++) {
+//						for(int k=0; k<W; k++) {
+//							System.out.print(map[e][k]);
+//						}
+//						System.out.print("\n");
+//					}
+//					System.out.print("\n");
 					continue;
 				}
-				switch(howDo[j]) {
-				case "U":
-					if(Now[0]-1>=0&&Now[0]-1<H&&Now[1]>=0&&Now[1]<W&&map[Now[0]-1][Now[1]].equals(".")) {
-						map[Now[0]][Now[1]]=".";
-						map[Now[0]-1][Now[1]]="^";
-						Now[0]=Now[0]-1;
-					}else {
-						map[Now[0]][Now[1]]="^";
-					}
-					break;
-				case "D" :
-					if(Now[0]+1>=0&&Now[0]+1<H&&Now[1]>=0&&Now[1]<W&&map[Now[0]+1][Now[1]].equals(".")) {
-						map[Now[0]][Now[1]]=".";
-						map[Now[0]+1][Now[1]]="v";
-						Now[0]=Now[0]+1;
-					}else {
-						map[Now[0]][Now[1]]="v";
-					}
-					break;
-				case "L" :
-					if(Now[0]>=0&&Now[0]<H&&Now[1]-1>=0&&Now[1]-1<W&&map[Now[0]][Now[1]-1].equals(".")) {
-						map[Now[0]][Now[1]]=".";
-						map[Now[0]][Now[1]-1]="<";
-						Now[1]=Now[1]-1;
-					}else {
-						map[Now[0]][Now[1]]="<";
-					}
-					break;
-				case "R" :
-					if(Now[0]>=0&&Now[0]<H&&Now[1]+1>=0&&Now[1]+1<W&&map[Now[0]][Now[1]+1].equals(".")) {
-						map[Now[0]][Now[1]]=".";
-						map[Now[0]][Now[1]+1]=">";
-						Now[1]=Now[1]+1;
-					}else {
-						map[Now[0]][Now[1]]=">";
-					}
-					break;
-				}
+			    move(howDo[j]);
 				
+//				System.out.println(howDo[j]+" "+Now[0]+" "+Now[1]);
+//				for(int e=0; e<H;e++) {
+//					for(int k=0; k<W; k++) {
+//						System.out.print(map[e][k]);
+//					}
+//					System.out.print("\n");
+//				}
+//				System.out.print("\n");
 			}
 			
 			sb.append("#").append(i).append(" ");
@@ -106,6 +85,48 @@ class Solution
 		}
 		System.out.println(sb.toString());
 	}
+	
+	
+	 public static void move(String command) {
+		 switch (command) {
+         case "U":
+             if (Now[0] - 1 >= 0 && map[Now[0] - 1][Now[1]].equals(".")) {
+                 map[Now[0]][Now[1]] = ".";
+                 map[Now[0] - 1][Now[1]] = "^";
+                 Now[0] = Now[0] - 1;
+             } else {
+                 map[Now[0]][Now[1]] = "^";
+             }
+             break;
+         case "D":
+             if (Now[0] + 1 < H && map[Now[0] + 1][Now[1]].equals(".")) {
+                 map[Now[0]][Now[1]] = ".";
+                 map[Now[0] + 1][Now[1]] = "v";
+                 Now[0] = Now[0] + 1;
+             } else {
+                 map[Now[0]][Now[1]] = "v";
+             }
+             break;
+         case "L":
+             if (Now[1] - 1 >= 0 && map[Now[0]][Now[1] - 1].equals(".")) {
+                 map[Now[0]][Now[1]] = ".";
+                 map[Now[0]][Now[1] - 1] = "<";
+                 Now[1] = Now[1] - 1;
+             } else {
+                 map[Now[0]][Now[1]] = "<";
+             }
+             break;
+         case "R":
+             if (Now[1] + 1 < W && map[Now[0]][Now[1] + 1].equals(".")) {
+                 map[Now[0]][Now[1]] = ".";
+                 map[Now[0]][Now[1] + 1] = ">";
+                 Now[1] = Now[1] + 1;
+             } else {
+                 map[Now[0]][Now[1]] = ">";
+             }
+             break;
+     }
+	 }
 	
 	public static void shoot() {
 		if(map[Now[0]][Now[1]].equals("^")) {
