@@ -1,27 +1,76 @@
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Collections;
- 
- 
-public class Main {	
-	public static void main(String[] args) {
-    
-		Scanner in = new Scanner(System.in);
-		StringBuilder sb = new StringBuilder();
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main {
+	static int [] A;
+	static int [] tmp;
+	static long result;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		int N = in.nextInt();
+		int N = Integer.parseInt(br.readLine());
+		A = new int [N+1];
+		tmp = new int [N+1];
 		
-		ArrayList<Integer> list = new ArrayList<>();
-		
-		for(int i = 0; i < N; i++) {
-			list.add(in.nextInt());
+		for(int i=1; i<=N; i++) {
+			A[i] = Integer.parseInt(br.readLine());
 		}
 		
-		Collections.sort(list);
+		merget_sort(1,N);
 		
-		for(int value : list) {
-			sb.append(value).append('\n');
+		for(int i =1; i<=N; i++) {
+			bw.write(A[i]+"\n");
 		}
-		System.out.println(sb);
+		
+		bw.flush();
+		bw.close();
+
 	}
+	
+	public static void merget_sort(int s, int e) {
+		if(e-s <1) {
+			return;
+		}
+		int m = s+(e-s)/2;
+		
+		merget_sort(s,m);
+		merget_sort(m+1,e);
+		
+		for(int i =s ; i<=e; i++) {
+			tmp[i] = A[i];
+		}
+		
+		int k = s;
+		int index1 =s;
+		int index2 =m+1;
+		while(index1 <=m && index2 <=e) {
+			if(tmp[index1]> tmp[index2]) {
+				A[k] = tmp[index2];
+				k++;
+				index2++;
+			}else {
+				A[k] = tmp[index1];
+				k++;
+				index1++;
+			}
+		}
+		
+		while(index1 <= m) {
+			A[k] = tmp[index1];
+			k++;
+			index1++;
+		}
+		
+		while(index2 <= e) {
+			A[k] = tmp[index2];
+			k++;
+			index2++;
+		}
+	}
+
 }
