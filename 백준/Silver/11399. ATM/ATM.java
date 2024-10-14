@@ -16,21 +16,22 @@ public class Main {
 			arr[i]= Integer.parseInt(st.nextToken());
 		}
 		
-		// 삽입 정렬
-		for(int i =1; i<N; i++) {
-			for(int j=i-1; j>=0;j--) {
-				if(arr[j]>arr[i]) {
-					swap(j,i);
-					i=j;
-				}
-			}
-		}
+		 // 삽입 정렬
+        for (int i = 1; i < N; i++) {
+            int key = arr[i]; 
+            int j = i - 1;
+
+           
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];  
+                j--;
+            }
+            arr[j + 1] = key;  
+        }
 		int sum = 0;
-		int wholeSum = 0;
 		
 		for(int i : arr) {
-			sum = sum + ((N--)*i);
-			
+			sum = sum + ((N--)*i);	
 		}
 		System.out.println(sum);
 
