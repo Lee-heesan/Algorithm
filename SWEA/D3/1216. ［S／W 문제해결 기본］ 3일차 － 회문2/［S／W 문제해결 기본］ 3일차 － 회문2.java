@@ -1,62 +1,64 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
-class Solution
-{
-	static String[] arr;
-	static long max;
-	static StringBuilder sb= new StringBuilder();
-	public static void main(String args[])throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		for(int i=1; i<=10; i++) {
-			int T = Integer.parseInt(br.readLine());
-			
-			arr = new String[100];
-			max = 1;
-			
-			//가로
-			for(int j=0; j<100; j++) {
-				String str = br.readLine();
-				arr[j]=str;
-				palindrome(str, 100);
-			}
-			
-			for(int j =0; j<100; j++) {
-				String ing = "";
-                for(int k=0;k<arr.length;k++) {
-                    ing += arr[k].charAt(j);
-                }
-                palindrome(ing,100);
-			}
-			
-			System.out.println("#"+T+" "+max);
-		}
-		
-	}
-	
-	public static void palindrome(String str ,int length) {
-		int st = 0;
-		String tmp1 = "";
-		String tmp2 = "";
-		while(length>1||length>max) {
-			tmp1 = str.substring(st,st+length);
-			StringBuffer sb = new StringBuffer(tmp1);
-			tmp2 = sb.reverse().toString();
-			
-			if(tmp1.equals(tmp2)) {
-				max = Math.max(max, length);
-				break;
-			}
-			
-			st++;
-			if(st+length>100) {
-				st=0;
-				length--;	
-			}
-		}
-		
-	}
+public class Solution {
+    static char[][] board; // 문자판 배열
+    static final int SIZE = 100; // 문자판 크기
 
+    public static boolean hasPalindrome(int length) {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col <= SIZE - length; col++) {
+                if (isPalindromeInRow(row, col, length) || isPalindromeInCol(col, row, length)) {
+                    return true; 
+                }
+            }
+        }
+        return false; 
+    }
+
+    // 가로 방향 회문 검사
+    public static boolean isPalindromeInRow(int row, int startCol, int length) {
+        for (int offset = 0; offset < length / 2; offset++) {
+            if (board[row][startCol + offset] != board[row][startCol + length - 1 - offset]) {
+                return false;
+            }
+        }
+        return true; 
+    }
+
+    // 세로 방향 회문 검사
+    public static boolean isPalindromeInCol(int startRow, int col, int length) {
+        for (int offset = 0; offset < length / 2; offset++) {
+            if (board[startRow + offset][col] != board[startRow + length - 1 - offset][col]) {
+                return false;
+            }
+        }
+        return true; 
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        for (int testCase = 0; testCase < 10; testCase++) {
+            int t = Integer.parseInt(br.readLine()); 
+            board = new char[SIZE][SIZE]; 
+
+            // 문자판 입력
+            for (int row = 0; row < SIZE; row++) {
+                String line = br.readLine();
+                for (int col = 0; col < SIZE; col++) {
+                    board[row][col] = line.charAt(col);
+                }
+            }
+
+            // 가장 긴 회문 찾기
+            for (int length = SIZE; length > 0; length--) {
+                if (hasPalindrome(length)) {
+                    System.out.println("#" + t + " " + length);
+                    break; 
+                }
+            }
+        }
+        br.close();
+    }
 }
