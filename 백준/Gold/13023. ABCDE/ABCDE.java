@@ -36,6 +36,9 @@ public class Main {
 		for (int i = 0; i < N; i++) {
             if (!result) {
             	dfs(i, 1);
+            }else {
+            	System.out.println(1);
+            	return;
             }
         }
 
