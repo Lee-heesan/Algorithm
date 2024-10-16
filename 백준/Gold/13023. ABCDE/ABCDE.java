@@ -34,12 +34,11 @@ public class Main {
 		}
 		
 		for (int i = 0; i < N; i++) {
-            if (!result) {
-            	dfs(i, 1);
-            }else {
+			if(result){
             	System.out.println(1);
             	return;
             }
+			dfs(i,1);
         }
 
 	    System.out.println(result?1:0);
@@ -55,6 +54,9 @@ public class Main {
         for (int to : list[start]) {
             if (!visited[to]) {
                 dfs(to, depth + 1);
+                if(result) {
+                	return;
+                }
             }
         }
         visited[start] = false;
