@@ -17,6 +17,8 @@ public class Main {
 		int lo =  1;
 		int hi = 0;
 		int sum = 0;
+		
+	
 		for(int i = 0; i<N; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 			sum += arr[i]; 
@@ -29,18 +31,16 @@ public class Main {
 			System.out.println(hi);
 			return;
 		}
-		
-		int mid = (lo+hi)/2;
-		sum = 0;
+
 		
 		while(lo<hi-1) {
-			mid = (lo+hi)/2;
-			sum = 0;
+			int mid = (lo+hi)/2;
+			int MidSum = 0;
 			for(int i =0; i<N; i++) {
-				sum += Math.min(arr[i],mid);
+				MidSum += Math.min(arr[i],mid);
 			}
 			
-			if(sum<=total) {
+			if(MidSum<=total) {
 				lo = mid;
 			}else {
 				hi = mid;
