@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class Main {
@@ -15,15 +14,16 @@ public class Main {
 			long mid = (lo+hi)/2;
 			long count =0;
 			
+			
 			for(int i =1; i<=N; i++) {
 				// lower Bound 방식
 				count +=Math.min(mid/i, N);
-			}
+					}
 			
-			if (k<=count) {
-				hi = mid;
-			}else {
+			if (k>count) {
 				lo = mid+1;
+			}else {
+				hi = mid;
 			}
 		}
 		
