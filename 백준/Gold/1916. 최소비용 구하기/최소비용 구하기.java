@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -45,7 +44,7 @@ public class Main {
 			if(!visited[now.city]) {
 				visited[now.city]=true;
 				for(Node next : list[now.city] ) {
-					if(!visited[next.city] &&now.fee+next.fee<D[next.city]) {
+					if(now.fee+next.fee<D[next.city]) {
 						D[next.city] = now.fee+next.fee;
 						PQ.add(new Node(next.city,D[next.city]));
 					}
