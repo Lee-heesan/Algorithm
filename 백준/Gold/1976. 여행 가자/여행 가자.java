@@ -1,18 +1,20 @@
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
 	static int [] arr;
-	public static void main(String [] args) throws IOException {
+	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st ;
-		StringBuilder sb = new StringBuilder();
-	
+		StringTokenizer st;
+		
 		int N = Integer.parseInt(br.readLine());
 		int M = Integer.parseInt(br.readLine());
+		
 		arr = new int[N+1];
-		for(int i=1; i<=N; i++) {
+		for(int i =1; i<=N;i++) {
 			arr[i]=i;
 		}
 		
@@ -21,48 +23,46 @@ public class Main {
 			for(int j=1; j<=N; j++) {
 				int num = Integer.parseInt(st.nextToken());
 				if(num==1) {
-					if(find(i)!=find(j)) {
-						union(i,j);
-					}
+					union(i,j);
+				}else {
+					continue;
 				}
 			}
 		}
 		
-		st = new StringTokenizer(br.readLine());
-		int [] plan = new int[M];
+		st= new StringTokenizer(br.readLine());
+		int [] root = new int[M];
 		for(int i=0; i<M; i++) {
-			plan[i]=Integer.parseInt(st.nextToken());
+			root[i]=Integer.parseInt(st.nextToken());
 		}
 		
 		
-		for(int i =0; i<M-1; i++) {
-			if(find(plan[i])!=find(plan[i+1])) {
+		for(int i=0; i<M-1; i++) {
+			int a = root[i];
+			int b = root[i+1];
+			
+			if(find(a)!=find(b)) {
 				System.out.println("NO");
 				return;
 			}
 		}
 		
 		System.out.println("YES");
-		
 	}
 	
-	public static void union(int A, int B) {
-		int rootA = find(A);
-		int rootB = find(B);
+	public static void union(int a, int b) {
+		int rootA = find(a);
+		int rootB = find(b);
 		
-		
-		if(rootA == rootB) {
-			return;
-		}else {
-			arr[rootA]=rootB;
-		}
+		arr[rootA]=rootB;
 	}
 	
-	public static int find(int num) {
-		if(arr[num]==num) {
-			return num;
+	public static int find(int X) {
+		if(arr[X]==X) {
+			return X;
 		}
 		
-		return arr[num] = find(arr[num]);
+		return arr[X]=find(arr[X]);
 	}
+
 }
