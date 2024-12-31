@@ -1,88 +1,96 @@
-
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
-	// 1753 다익스트라
-	static List<Node> [] list;
+	static List<Node> [] list; 
 	static int [] D;
 	static boolean [] visited;
-	static int V,E,start;
-	static int u,v,w;
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args)throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st= new StringTokenizer(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		StringBuilder sb = new StringBuilder();
 		
-		V = Integer.parseInt(st.nextToken());
-		E = Integer.parseInt(st.nextToken());
+		int V = Integer.parseInt(st.nextToken());
+		int E = Integer.parseInt(st.nextToken());
+		int S = Integer.parseInt(br.readLine());
 		
-		list = new ArrayList[V+1];
-		D = new int[V+1];
 		visited = new boolean[V+1];
-		
+		D = new int [V+1];
+		list = new ArrayList[V+1];
 		for(int i=1; i<=V; i++) {
-			list[i]= new ArrayList<>();
-			D[i]=Integer.MAX_VALUE;
+			D[i] = Integer.MAX_VALUE;
+			list[i] = new ArrayList<Node>();
+			
+			if(S==i) {
+				D[i]=0;
+			}
 		}
 		
-		start = Integer.parseInt(br.readLine());
-		D[start] =0;
 		
-		for(int i=0; i<E; i++) {
-			st = new StringTokenizer(br.readLine());
-			u = Integer.parseInt(st.nextToken());
-			v = Integer.parseInt(st.nextToken());
-			w = Integer.parseInt(st.nextToken());
+		for(int i =0; i<E; i++) {
+			st= new StringTokenizer(br.readLine());
+			int u = Integer.parseInt(st.nextToken());
+			int v = Integer.parseInt(st.nextToken());
+			int w = Integer.parseInt(st.nextToken());
 			
 			list[u].add(new Node(v,w));
 		}
 		
-		PriorityQueue<Node> queue = new PriorityQueue<Node>();
-		queue.add(new Node(start,0));
 		
-		while(!queue.isEmpty()) {
-			Node now = queue.poll();
+		PriorityQueue<Node> PQ = new PriorityQueue<Node>();
+		PQ.add(new Node(S,0));
+		while(!PQ.isEmpty()) {
+			Node now = PQ.poll();
 			
 			if(visited[now.E]) continue;
-			visited[now.E]=true;
+			visited[now.E] = true;
 			
-			
-			for(Node next: list[now.E] ) {
-				if(D[next.E]>D[now.E]+next.D) {
-					D[next.E] = D[now.E]+next.D;
-					queue.add(new Node(next.E,D[next.E]));
+			for(Node next : list[now.E]){
+				if(next.D+D[now.E]<D[next.E]) {
+					D[next.E]=next.D+D[now.E];
+					PQ.add(new Node(next.E,D[next.E]));
 				}
 			}
 		}
 		
-		for(int i=1; i<=V;i++) {
+		
+		
+		for(int i=1; i<=V; i++) {
 			if(!visited[i]) {
 				sb.append("INF"+"\n");
 				continue;
 			}
-			sb.append(D[i]+"\n");
+			sb.append(D[i]).append("\n");
 		}
 		
-		System.out.println(sb);
+		
+		System.out.println(sb.toString());
+		
 		
 	}
-	
 	
 	static class Node implements Comparable<Node>{
 		int E;
 		int D;
 		
-		public Node(int E, int D) {
+		Node(int E, int D){
 			this.E = E;
 			this.D = D;
 		}
 
 		@Override
-		public int compareTo(Node e) {
-			if(this.D>e.D) return 1;
-			else return -1;
+		public int compareTo(Node o) {
+			if(this.D>o.D) {
+				return 1;
+			}else {
+				return -1;
+			}
 		}
-		
 	}
+
 }
