@@ -1,15 +1,15 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main{
-    static int n, m, k;
+public class Main {
+	static int n, m, k;
     static long[] tree; // 세그먼트 트리 배열
     static int size; // 트리의 크기
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         StringBuilder sb = new StringBuilder();
 
@@ -23,14 +23,14 @@ public class Main{
         }
         tree = new long[2 * size]; // 세그먼트 트리 배열 초기화
 
-        // 리프 노드 입력 받기
+        // 리프 노드 입력 받기 2^k 승 부터
         for (int i = 0; i < n; i++) {
             tree[size + i] = Long.parseLong(br.readLine());
         }
 
         // 세그먼트 트리 초기화
         build();
-
+        int leftNodeStartIndex = size -1;
         // 명령 처리
         for (int i = 0; i < m + k; i++) {
             st = new StringTokenizer(br.readLine());
@@ -41,7 +41,9 @@ public class Main{
             if (a == 1) { // 값 업데이트
                 update(b - 1, c);
             } else if (a == 2) { // 구간 합 계산
-                sb.append(query(b - 1, (int) c - 1, 1, 0, size - 1)).append("\n");
+            	b = b + leftNodeStartIndex;
+            	c = c + leftNodeStartIndex;
+                sb.append(query(b,(int)c)).append("\n");
             }
         }
 
@@ -67,17 +69,19 @@ public class Main{
     }
 
     // 구간 합 계산
-    private static long query(int start, int end, int node, int nodeLeft, int nodeRight) {
-        if (start > nodeRight || end < nodeLeft) { // 구간 밖
-            return 0;
+    private static long query(int start, int end) {
+        long partSum = 0;
+        while(start<=end) {
+        	if(start%2 ==1) {
+        		partSum = partSum + tree[start];
+        	}
+        	if(end%2 ==0) {
+        		partSum +=tree[end];
+        	}
+        	
+        	start=(start+1)/2;
+        	end = (end-1)/2;
         }
-
-        if (start <= nodeLeft && nodeRight <= end) { // 구간 안
-            return tree[node];
-        }
-
-        // 구간이 겹칠 경우
-        int mid = (nodeLeft + nodeRight) / 2;
-        return query(start, end, node * 2, nodeLeft, mid) + query(start, end, node * 2 + 1, mid + 1, nodeRight);
+        return partSum;
     }
 }
