@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -31,7 +30,7 @@ public class Main {
             tree[b].add(a);
         }
 
-        // maxK 계산 (log2(N) + 1)
+        // maxK 계산 
         maxK = 0;
         int tmp = N;
         while (tmp > 0) {
@@ -41,10 +40,9 @@ public class Main {
 
         parentK = new int[maxK + 1][N + 1];
 
-        // BFS로 depth 설정 및 parent 설정
         bfs(1);
 
-        // DP 테이블 채우기 (parentK)
+        // 1. 부모 노드 저장 배열 만들기
         for (int i = 1; i <= maxK; i++) {
             for (int j = 1; j <= N; j++) {
                 if (parentK[i - 1][j] != 0) {
@@ -90,15 +88,42 @@ public class Main {
             a = b;
             b = temp;
         }
+        
+        //2. 깊이 맞추기
+        // 첫 번째 방법(시간 초과)
+//        while (depth[b] > depth[a]) {
+//            b = parentK[0][b];  
+//        } 
+//
+        // 두 번째 방법(시간 초과)
+//        while (depth[b] > depth[a]) {
+//            if (depth[b] - depth[a] >= 8) {
+//                b = parentK[3][b]; 
+//            } else if (depth[b] - depth[a] >= 4) {
+//                b = parentK[2][b];
+//            } else if (depth[b] - depth[a] >= 2) {
+//                b = parentK[1][b];
+//            } else {
+//                b = parentK[0][b];
+//            }
+//        }
+        
+        // 세 번째 방법
+        int diff = depth[b] - depth[a];
 
-        for (int i = maxK; i >= 0; i--) {
-            if (depth[b] - depth[a] >= (1 << i)) {
+        for (int i = 0; diff > 0; i++) {
+            if ((diff & 1) == 1) {
                 b = parentK[i][b];
             }
+            diff >>= 1;
         }
 
-        if (a == b) return a;
 
+
+
+        if (a == b) return a;
+        
+        //3.최소 공통 조상 찾기
         for (int i = maxK; i >= 0; i--) {
             if (parentK[i][a] != parentK[i][b]) {
                 a = parentK[i][a];
