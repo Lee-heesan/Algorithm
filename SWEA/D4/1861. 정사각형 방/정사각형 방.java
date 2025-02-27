@@ -37,7 +37,9 @@ import java.util.StringTokenizer;
    이러한 상황에서도 동일하게 java Solution 명령으로 프로그램을 수행해볼 수 있습니다.
  */
 class Solution
-{static int N;
+{
+	
+	static int N;
 	static int [][] room;
 	static int [] dx = {0,1,0,-1};
 	static int [] dy = {1,0,-1,0};
@@ -75,7 +77,7 @@ class Solution
 			maxNum = 0;
 			for(int j=1; j<=N*N; j++) {
 				if(!visited[list[j].get(0)][list[j].get(1)]) {
-					search(j,j,1);
+					search(j,list[j].get(1),list[j].get(0),1);
 				}
 			}
 			
@@ -84,10 +86,8 @@ class Solution
 		System.out.println(sb.toString());
 	}
 	
-	private static void search(int start ,int now, int cnt) {
-		int y = list[now].get(0);
-		int x = list[now].get(1);		
-		visited[y][x] = true;
+	private static void search(int start ,int nowX, int nowY, int cnt) {		
+		visited[nowY][nowX] = true;
 		
 		if(max<cnt) { //클 경우
 			max = cnt;
@@ -98,11 +98,11 @@ class Solution
 		
 		
 		for(int i =0; i<4; i++) {
-			 int newY = y+dy[i];
-			 int newX = x+dx[i];
+			 int newY = nowY+dy[i];
+			 int newX = nowX+dx[i];
 			 
-			 if(newY>=0 && newY<N && newX>=0 && newX<N && room[newY][newX]== room[y][x]+1&&!visited[newY][newX]) {
-				 search(start, room[newY][newX],cnt+1);
+			 if(newY>=0 && newY<N && newX>=0 && newX<N && room[newY][newX]== room[nowY][nowX]+1&&!visited[newY][newX]) {
+				 search(start,newX ,newY,cnt+1);
 			 }
 		}
 	}
