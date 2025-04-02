@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +7,7 @@ public class Solution {
     static int N, M, C;
     static int[][] map;
     static int max;
+    private static boolean[][] visited;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,7 +30,8 @@ public class Solution {
                     map[j][k] = Integer.parseInt(st.nextToken());
                 }
             }
-
+            
+            visited = new boolean[N][N];
             max = Integer.MIN_VALUE;
             dfs(0, 0, 0, 0);  // row, col, people (일꾼), sumPow (수익)
 
@@ -62,25 +63,29 @@ public class Solution {
     private static int getMaxSubsetProfit(int i, int j) {
         int maxProfit = 0;
         
+        maxProfit = findMaxProfit(i, j, 0, 0, 0); 
         
-        for (int mask = 0; mask < (1 << M); mask++) {
-            int sum = 0;
-            int sumSquare = 0;
+        return maxProfit;
+    }
 
-            
-            for (int k = 0; k < M; k++) {
-                if ((mask & (1 << k)) != 0) {
-                    sum += map[i][j + k];
-                    sumSquare += map[i][j + k] * map[i][j + k];
-                }
-            }
 
-            
+    private static int findMaxProfit(int i, int j, int idx, int sum, int sumSquare) {
+        if (idx == M) {
             if (sum <= C) {
-                maxProfit = Math.max(maxProfit, sumSquare);
+                return sumSquare;  
             }
+            return 0;  
         }
+
+      
+        int maxProfit = findMaxProfit(i, j, idx + 1, sum, sumSquare);
+
+       
+        int newSum = sum + map[i][j + idx];
+        int newSumSquare = sumSquare + map[i][j + idx] * map[i][j + idx];
+        maxProfit = Math.max(maxProfit, findMaxProfit(i, j, idx + 1, newSum, newSumSquare));
 
         return maxProfit;
     }
+
 }
