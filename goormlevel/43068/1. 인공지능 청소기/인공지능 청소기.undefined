@@ -1,0 +1,24 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
+        int T = Integer.parseInt(br.readLine());
+        for (int i = 0; i < T; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int X = Integer.parseInt(st.nextToken());
+            int Y = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+
+            int d = Math.abs(X) + Math.abs(Y);
+
+            if (d <= N && ((N - d) % 2 == 0)) sb.append("YES\n");
+            else sb.append("NO\n");
+        }
+
+        System.out.print(sb.toString());
+    }
+}
