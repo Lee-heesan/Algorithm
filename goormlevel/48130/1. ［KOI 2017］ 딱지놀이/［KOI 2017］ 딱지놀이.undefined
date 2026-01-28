@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	static int N;
+	static StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		N = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		for(int i = 0; i < N; i++){
+				st = new StringTokenizer(br.readLine());
+				
+				int cntA = Integer.parseInt(st.nextToken());
+				PriorityQueue<Integer> AQ = new PriorityQueue<Integer>(Collections.reverseOrder());
+				
+				for(int j=0; j<cntA; j++){
+					AQ.add(Integer.parseInt(st.nextToken()));
+				}
+
+				st = new StringTokenizer(br.readLine());
+				int cntB = Integer.parseInt(st.nextToken());
+				PriorityQueue<Integer> BQ = new PriorityQueue<Integer>(Collections.reverseOrder());
+				
+				for(int j=0; j<cntB; j++){
+					BQ.add(Integer.parseInt(st.nextToken()));
+				}
+				calculate(AQ,BQ);
+		}
+
+		System.out.println(sb.toString());
+	}
+
+	public static void calculate(PriorityQueue<Integer> AQ, PriorityQueue<Integer> BQ){
+		int size = AQ.size();
+		String maxLen = "";
+		
+		if(AQ.size() > BQ.size()){
+			size = BQ.size();
+			maxLen = "A";
+		}else if(AQ.size()<BQ.size()){
+			size = AQ.size();
+			maxLen = "B";
+		}
+
+		for(int i = 0; i<size; i++){
+			int a = AQ.poll();
+			int b = BQ.poll();
+
+			if(a>b){
+				sb.append("A").append("\n");
+				return;
+			}else if(a<b){
+				sb.append("B").append("\n");
+				return;
+			}
+		}
+
+		if(maxLen.equals("")){
+			sb.append("D").append("\n");
+		}else if(maxLen.equals("A")){
+			sb.append("A").append("\n");
+		}else{
+			sb.append("B").append("\n");
+		}
+	}
+}
