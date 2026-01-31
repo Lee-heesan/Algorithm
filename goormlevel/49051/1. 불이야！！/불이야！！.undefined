@@ -1,0 +1,49 @@
+                    goormX = j;
+                    goormY = i;
+                    break;
+                }
+            }
+            if (goormX != -1) break;
+        }
+
+        System.out.println(bfs(goormX, goormY, 0));
+    }
+
+	public static int bfs(int x, int y, int cnt){
+		Queue<pos> queue = new LinkedList<pos>();
+		queue.add(new pos(x,y,cnt));
+
+		while(!queue.isEmpty()){
+			pos now = queue.poll();
+
+			for(int i = 0; i<4; i++){
+				int nxtX = now.x+dx[i];
+				int nxtY = now.y+dy[i];
+
+				if(nxtX<0 || nxtY<0) continue;
+				if(nxtX>=C || nxtY>=R) continue;
+				if(visited[nxtY][nxtX]) continue;
+				if(map[nxtY][nxtX]=='#') continue;
+				if(map[nxtY][nxtX]=='@') {
+					return now.cnt;
+				}
+
+				visited[nxtY][nxtX]=true;
+				queue.add(new pos(nxtX,nxtY,now.cnt+1));
+			}
+		}
+		return -1;
+	}
+
+	static class pos{
+		int x;
+		int y;
+		int cnt;
+
+		public pos(int x, int y, int cnt){
+			this.x = x;
+			this.y = y;
+			this.cnt = cnt;
+		}
+	}
+}
