@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    static int N;
+    static int[] maxArr;
+    static int[] arr;
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N = Integer.parseInt(br.readLine().trim());
+        maxArr = new int[N];
+        arr = new int[N];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++){
+					maxArr[i] = Integer.parseInt(st.nextToken()) + 1;
+				} 
+
+        st = new StringTokenizer(br.readLine());			
+        for (int i = 0; i < N; i++){
+					arr[i] = Integer.parseInt(st.nextToken());
+				} 
+
+        int button = Integer.parseInt(br.readLine());
+
+        cal(N - 1, button);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+					sb.append(arr[i]);
+				}
+			
+        System.out.println(sb.toString());
+    }
+
+    public static void cal(int idx, int button) {
+        int sum = arr[idx] + button;
+        arr[idx] = sum % maxArr[idx];
+        int carry = sum / maxArr[idx];
+
+        if (idx == 0 || carry == 0) return;
+        cal(idx - 1, carry);
+    }
+}
