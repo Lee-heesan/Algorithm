@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		int N = Integer.parseInt(br.readLine());
+		PriorityQueue <Integer> pq1 = new PriorityQueue<Integer>();
+		PriorityQueue <Integer> pq2 = new PriorityQueue<Integer>();
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		
+		for(int i = 0; i<N; i++){
+			int num = Integer.parseInt(st.nextToken());
+			if(num<0){
+				pq1.add(num);
+			}else{
+				pq2.add(num);
+			}
+		}
+
+		int result = 0;
+		for(int i =0; i<N/2; i++){
+			if(pq1.isEmpty() || pq2.isEmpty()){
+				break;
+			}
+			if(pq1.peek()==pq2.peek()){
+				pq1.poll();
+				pq2.poll();
+			}else if(pq1.peek()>pq2.peek()){
+				result+=pq2.poll();
+			}else if(pq1.peek()<pq2.peek()){
+				result+=pq1.poll();
+			}
+		}
+
+		while(!pq1.isEmpty()){
+			result+=pq1.poll();
+		}
+
+		while(!pq2.isEmpty()){
+			result+=pq2.poll();
+		}
+
+		System.out.println(result);
+	}
+}
