@@ -1,28 +1,26 @@
+import java.util.*;
+import java.io.*;
 
-import java.util.Scanner;
-
-public class Main {
-	static long [] arr;
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		Long N = sc.nextLong();
-		long temp = N;
-		for (long i=2; i<=Math.sqrt(N); i++) {
-			if (N%i == 0) {
-				temp = temp - (temp/i);
-				while (N%i == 0) {
-					N /= i;
-				}
-			}
-		}
-		if (N > 1) {
-			temp = temp - (temp/N);
-		}
-		System.out.println(temp);
-		
-		
-	
-	}
-
+public class Main{
+    public static void main(String [] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        long n = Long.parseLong(br.readLine());
+        long temp = n;
+        
+        for(long i = 2; i<=Math.sqrt(n); i++){
+            if(n%i==0){
+                temp = temp - (temp/i);
+                while(n%i==0){
+                    n /= i;
+                }
+            }
+        }
+        
+        if(n>1){
+            temp = temp - (temp/n); 
+        }
+        
+        System.out.println(temp);
+    }
 }
