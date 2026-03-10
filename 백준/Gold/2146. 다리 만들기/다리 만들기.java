@@ -89,7 +89,10 @@ public class Main {
 						queue.add(new int[] {ny,nx,now[2]+1});
 						visited[ny][nx] = true;
 					}else if(nowIsland!=newMap[ny][nx]) {
-						min = Math.min(min, now[2]);
+						if(now[2]>min) {
+							return;
+						}
+						min =now[2];
 					}
 				}
 			}
