@@ -1,56 +1,55 @@
-
 import java.io.*;
 import java.util.*;
 
 public class Main {
-	//2252 위상정렬
-	static List<ArrayList<Integer>> list;
-	static int D [];
-	public static void main(String[] args) throws IOException {
+	static int N, M;
+	static int [] indegree;
+	static List<Integer> [] list;
+	public static void main(String [] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		StringBuilder sb = new StringBuilder();
 		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
 		
-		list = new ArrayList<>();
-		for(int i=0; i<=N; i++) {
-			list.add(new ArrayList<>());
+		indegree = new int [N+1];
+		list = new LinkedList [N+1];
+		
+		for(int i = 1; i<=N; i++) {
+			list[i] = new LinkedList<Integer>();
 		}
 		
-		int [] indegree = new int[N+1];
-		
-		for(int i=0; i<M; i++) {
+		for(int i = 0; i<M; i++) {
 			st = new StringTokenizer(br.readLine());
+			int A = Integer.parseInt(st.nextToken());
+			int B = Integer.parseInt(st.nextToken());
 			
-			int S = Integer.parseInt(st.nextToken());
-			int E = Integer.parseInt(st.nextToken());
-			
-			list.get(S).add(E);
-			indegree[E]++;
+			indegree[B]++;
+			list[A].add(B);
 		}
-		
 		
 		Queue<Integer> queue = new LinkedList<Integer>();
-		for(int i =1; i<=N; i++) {
+		for(int i = N; i>=1; i--) {
 			if(indegree[i]==0) {
-				queue.offer(i);
+				queue.add(i);
 			}
 		}
 		
 		while(!queue.isEmpty()) {
 			int now = queue.poll();
 			sb.append(now+" ");
-			for(int next : list.get(now)) {
+			
+			for(int next : list[now]) {
 				indegree[next]--;
+				
 				if(indegree[next]==0) {
-					queue.offer(next);
+					queue.add(next);
 				}
 			}
 		}
 		
-		System.out.println(sb);
+		
+		System.out.println(sb.toString());		
 	}
-	
 }
